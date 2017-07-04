@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta charset="utf-8">
+    <meta name="keywords" content="彩票，福彩">
+    <meta name="description" content="测试彩票">
+    <title>彩票</title>
+    <style>html{font-size: 100px;}*{margin: 0; padding: 0;}</style>
+  </head>
+  <body>
+    <div id="lottery"></div>
+    <!-- built files will be auto injected -->
+  </body>
+  <script>
+    !(function(win, doc){
+        function setFontSize() {
+            // 获取window 宽度
+            var winWidth =  window.innerWidth;
+
+            // 640宽度以上进行限制 需要css进行配合
+            var size = (winWidth / 640) * 100;
+            doc.documentElement.style.fontSize = (size < 100 ? size : 100) + 'px' ;
+        }
+    
+        var evt = 'onorientationchange' in win ? 'orientationchange' : 'resize';
+        
+        var timer = null;
+    
+        win.addEventListener(evt, function () {
+            clearTimeout(timer);
+    
+            timer = setTimeout(setFontSize, 0);
+        }, false);
+        
+        win.addEventListener("pageshow", function(e) {
+            if (e.persisted) {
+                clearTimeout(timer);
+    
+                timer = setTimeout(setFontSize, 0);
+            }
+        }, false);
+    
+        // 初始化
+        setFontSize();
+    
+    }(window, document));    
+  </script>
+</html>
