@@ -1,5 +1,5 @@
 export default {
-  'name': 'multiple7',
+  'name': 'multiple11',
   'recommend': true, // default:true, false
   'recommend_icon': '荐',
   'title': '复式投注幸运号码',

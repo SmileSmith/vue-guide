@@ -35,42 +35,43 @@ export default {
         yNumbers: '00',
         wNumbers: '0000'
       },
-      selectConfig: Multiple7,
+      selectConfig: this.getConfig(),
       loading: false
     }
   },
   watch: {
     '$route': 'getCurrentPeroid'
   },
-  mounted: function () {
-    this.getCurrentPeroid()
-  },
   methods: {
-    getCurrentPeroid: function () {
+    getConfig: function () {
+      var config
       switch (this.$route.params.type) {
         case 'multiple7':
-          this.selectConfig = Multiple7
+          config = Multiple7
           break
         case 'multiple11':
-          this.selectConfig = Multiple11
+          config = Multiple11
           break
         case 'election5':
-          this.selectConfig = Election5
+          config = Election5
           break
         case 'direct3':
-          this.selectConfig = Direct3
+          config = Direct3
           break
         case 'direct5':
-          this.selectConfig = Direct5
+          config = Direct5
           break
         default:
-          this.selectConfig = Multiple7
+          config = Multiple7
       }
+      return config
+    },
+    getCurrentPeroid: function () {
+      this.selectConfig = this.getConfig()
       // 展示加载中的效果
       this.loading = true
-
       // 请求服务器配置信息，这里用express.router模拟 /mocks/config.buy.json
-      this.$http.post('/api/getCurrentPeroid').then(function (response) {
+      this.$http.post('/api/getCurrentPeroid', {type: this.$route.params.type}).then(function (response) {
         this.loading = false
         this.jackpotData = response.data.data.jackpotData
         this.peroidData = response.data.data.peroidData

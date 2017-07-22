@@ -9,11 +9,11 @@
       Loading...
     </div>    
     <div class="select-numberline" v-bind:class="{'select-inline': !selectConfig.title_inline, 'select-unit': selectConfig.number_title}">
-      <span class="select-number"  v-for="numberObj in selectConfig.numberList">
+      <span class="select-number"  v-for="numberObj in numberList">
         <span class="select-number-title" v-if="selectConfig.number_title && numberObj.title"> {{ numberObj.title }} </span>
         <span class="select-number-value" v-bind:class="{'sp-blue': numberObj.type == 'sp_blue', 'sp-white': numberObj.type == 'sp_white'}"> {{ numberObj.number }} </span>
       </span>
-      <span class="select-refresh" v-if="selectConfig.number_refresh"></span>
+      <span class="select-refresh" v-if="selectConfig.number_refresh" @click="getRandomBall"></span>
     </div>
     <div class="select-submit">
       <select-dropdown class="select-money" 
@@ -27,6 +27,7 @@
 <script>
 import MoneyList from '@/configs/dropdown.moneyList.js'
 import Dropdown from '@/components/common_components/Dropdown.vue'
+import { randomBall } from '@/configs/fn.core'
 // const moneyList = resolve => require(['@/configs/dropdown.moneyList.js'], resolve)
 // const Multiple7 = resolve => require(['@/configs/config.multiple7.js'], resolve)
 
@@ -35,16 +36,27 @@ export default {
   data () {
     return {
       moneyList: MoneyList.moneyList,
-      selectedMoney: 10
+      selectedMoney: 10,
+      numberList: randomBall(this.selectConfig.numberList)
     }
   },
   props: ['selectConfig', 'loading'],
+  watch: {
+    selectConfig: 'getRandomBall'
+  },
   components: {
     'select-dropdown': Dropdown
+  },
+  mounted: function () {
+    this.getRandomBall()
   },
   methods: {
     changeMoney: function (money) {
       this.selectedMoney = money
+    },
+    getRandomBall: function () {
+      var tempArray = randomBall(this.selectConfig.numberList)
+      this.numberList = tempArray
     }
   }
 }

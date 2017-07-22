@@ -1,5 +1,5 @@
 export default {
-  'name': '11election5',
+  'name': 'direct5',
   'recommend': false, // default:true, false
   'title': '排5直选',
   'title_inline': false, // default:true, false

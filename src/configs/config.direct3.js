@@ -1,5 +1,5 @@
 export default {
-  'name': '11election5',
+  'name': 'direct3',
   'recommend': false, // default:true, false
   'title': '福彩3D直选幸运号',
   'title_inline': false, // default:true, false
