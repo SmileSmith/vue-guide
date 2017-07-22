@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   'name': 'multiple7',
   'recommend': true, // default:true, false
   'recommend_icon': '荐',

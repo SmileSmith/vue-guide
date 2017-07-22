@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   'name': '11election5',
   'recommend': false, // default:true, false
   'title': '排5直选',

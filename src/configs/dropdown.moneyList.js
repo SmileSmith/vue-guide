@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   'moneyList': [
     {
       'number': 10,
