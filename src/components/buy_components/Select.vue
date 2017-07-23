@@ -13,7 +13,7 @@
         <span class="select-number-title" v-if="selectConfig.number_title && numberObj.title"> {{ numberObj.title }} </span>
         <span class="select-number-value" v-bind:class="{'sp-blue': numberObj.type == 'sp_blue', 'sp-white': numberObj.type == 'sp_white'}"> {{ numberObj.number }} </span>
       </span>
-      <span class="select-refresh" v-if="selectConfig.number_refresh" @click="getRandomBall"></span>
+      <span class="select-refresh" v-if="selectConfig.number_refresh" @click="getRandomBall($event)"></span>
     </div>
     <div class="select-submit">
       <select-dropdown class="select-money" 
@@ -37,7 +37,7 @@ export default {
     return {
       moneyList: MoneyList.moneyList,
       selectedMoney: 10,
-      numberList: randomBall(this.selectConfig.numberList)
+      numberList: this.getRandomBall()
     }
   },
   props: ['selectConfig', 'loading'],
@@ -47,16 +47,23 @@ export default {
   components: {
     'select-dropdown': Dropdown
   },
-  mounted: function () {
-    this.getRandomBall()
-  },
   methods: {
     changeMoney: function (money) {
       this.selectedMoney = money
     },
-    getRandomBall: function () {
-      var tempArray = randomBall(this.selectConfig.numberList)
-      this.numberList = tempArray
+    getRandomBall: function (event) {
+      if (!this.selectConfig.numberList) {
+        return
+      }
+      this.numberList = randomBall(this.selectConfig.numberList)
+      if (!event || !event.currentTarget) {
+        return this.numberList
+      }
+      var refreshElement = event.currentTarget
+      refreshElement.classList.remove('rotate')
+      window.setTimeout(function () {
+        refreshElement.classList.add('rotate')
+      }, 0)
     }
   }
 }
@@ -176,5 +183,18 @@ export default {
   font-family: inherit;
   font-size: 0.25rem;
   border-radius: 0.08rem;
+}
+.select-refresh.rotate {
+  transition: All 0.4s ease-in-out;
+  -webkit-transition: All 0.4s ease-in-out;
+  -moz-transition: All 0.4s ease-in-out;
+  -o-transition: All 0.4s ease-in-out;
+}
+.select-refresh.rotate {
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
 }
 </style>

@@ -40,9 +40,16 @@ export default {
     }
   },
   watch: {
-    '$route': 'getCurrentPeroid'
+    '$route': 'initData'
+  },
+  mounted: function () {
+    this.getCurrentPeroid()
   },
   methods: {
+    initData: function () {
+      this.selectConfig = this.getConfig()
+      this.getCurrentPeroid()
+    },
     getConfig: function () {
       var config
       switch (this.$route.params.type) {
@@ -67,7 +74,6 @@ export default {
       return config
     },
     getCurrentPeroid: function () {
-      this.selectConfig = this.getConfig()
       // 展示加载中的效果
       this.loading = true
       // 请求服务器配置信息，这里用express.router模拟 /mocks/config.buy.json
