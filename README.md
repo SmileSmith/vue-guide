@@ -1,5 +1,9 @@
 # vue-cli-guide
-A Vue cli guide to create a tiny mobile web using vue-router vue-resource
+A vue-li guide to create a tiny mobile web app using
+    "vue": "^2.3.3",
+    "vue-router": "^2.7.0"
+    "vue-resource": "^1.3.4"
+
 # vue-learning
 
 ## Build Setup
@@ -27,4 +31,7 @@ npm run e2e
 npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+For detailed explanation on how things work, checkout：
+1、[Official Guide] (http://vuejs-templates.github.io/webpack/)
+2、[Docs For vue-loader] (http://vuejs.github.io/vue-loader)
+3、[My blog](http://www.cnblogs.com/simleSmith)
