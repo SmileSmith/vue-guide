@@ -1,9 +1,12 @@
 # vue-cli-guide
 A vue-li guide to create a tiny mobile web app using
-    "vue": "^2.3.3",
-    "vue-router": "^2.7.0"
-    "vue-resource": "^1.3.4"
+``` bash
+"vue": "^2.3.3",
 
+"vue-router": "^2.7.0"
+
+"vue-resource": "^1.3.4"
+```
 # vue-learning
 
 ## Build Setup
@@ -32,6 +35,9 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout：
-1、[Official Guide] (http://vuejs-templates.github.io/webpack/)
-2、[Docs For vue-loader] (http://vuejs.github.io/vue-loader)
+
+1、[Official Guide](http://vuejs-templates.github.io/webpack/)
+
+2、[Docs For vue-loader](http://vuejs.github.io/vue-loader)
+
 3、[My blog](http://www.cnblogs.com/simleSmith)
