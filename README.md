@@ -5,7 +5,7 @@
 
 2、加入Webpack预渲染和PWA相关功能(整理中。。)
 
-3、基于circle-ci和docker实现：一次提交github，得到最终直接部署的镜像
+3、基于circle-ci和docker实现：一次提交github，得到最终可以直接部署的镜像
 
 
 # Vue
@@ -25,7 +25,7 @@ yarn run dev
 yarn run build
 
 # run all tests
-npm test
+yarn test
 ```
 # Docker
 依赖官方nginx添加项目代码部署在80端口，详情见：/Dockerfile
@@ -53,4 +53,4 @@ For detailed explanation on how things work, checkout：
 
 2、[My blog： http://www.cnblogs.com/simleSmith](http://www.cnblogs.com/simleSmith)
 
-3、[Docker Hub: https://hub.docker.com/r/smilesmith/vue-docker/](https://hub.docker.com/r/smilesmith/vue-docker/)
+3、[Docker Hub： https://hub.docker.com/r/smilesmith/vue-docker/](https://hub.docker.com/r/smilesmith/vue-docker/)
