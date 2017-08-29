@@ -56,4 +56,4 @@ jobs:
           TAG=0.1.${CIRCLE_BUILD_NUM}
           docker build ./ -t vue-cli-docker:$TAG
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push CircleCI-Public/vue-cli-docker:$TAG
+          docker push smilesmith/vue-cli-docker:$TAG
