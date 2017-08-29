@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="title">
-      <legend> {{ title }} </legend>
+      <legend>{{ title }}</legend>
     </div>
     <ul class="content">
       <li class="tip">{{ content }}</li>
-    </ul>   
+    </ul>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   name: 'rule',
   data () {
     return {
-      title: ' 规则说明 ',
+      title: '规则说明',
       content: '彩票的规则说明彩票的规则说明彩票的规则说明彩票的规则说明彩票的规则说明彩票的规则说明彩票的规则说明彩票的规则说明彩票的规则说明'
     }
   }
@@ -35,7 +35,7 @@ export default {
   height: 1px;
   line-height: 1px;
   padding: 0 0.2rem;
-  margin: 0.35rem auto;  
+  margin: 0.35rem auto;
   font-size: 0.28rem;
   font-weight: bold;
   text-align: center;
