@@ -43,7 +43,6 @@ export default {
     '$route': 'initData'
   },
   mounted: function () {
-    debugger
     this.getCurrentPeroid()
   },
   methods: {
