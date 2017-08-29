@@ -53,4 +53,4 @@ For detailed explanation on how things work, checkout：
 
 2、[My blog： http://www.cnblogs.com/simleSmith](http://www.cnblogs.com/simleSmith)
 
-3、[Docker Hub: https://hub.docker.com/r/smilesmith/vue-cli-docker/](https://hub.docker.com/r/smilesmith/vue-cli-docker/)
+3、[Docker Hub: https://hub.docker.com/r/smilesmith/vue-docker/](https://hub.docker.com/r/smilesmith/vue-docker/)
