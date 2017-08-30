@@ -16,6 +16,9 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin') // extract-text-w
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 //压缩css代码的，还能去掉extract-text-webpack-plugin插件抽离文件产生的重复代码，因为同一个css可能在多个模块中出现所以会导致重复代码，一般都是配合使用
 
+// TODO SPA预渲染插件，目前没有app-shell，效果不佳
+// var PrerenderSpaPlugin = require('prerender-spa-plugin') // SPA预渲染插件，更改index.html中的内容
+var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin') // Serviceworker插件，最终在dist目录下生成service-worker.js
 
 // 如果当前环境变量NODE_ENV的值是testing，则导入 test.env.js配置文，设置env为"testing"
 // 如果当前环境变量NODE_ENV的值不是testing，则设置env为"production"
@@ -82,6 +85,49 @@ var webpackConfig = merge(baseWebpackConfig, {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency' // 可以对页面中引用的chunk进行排序，保证页面的引用顺序
+    }),
+    // TODO SPA预渲染插件，目前没有app-shell，效果不佳
+/*     new PrerenderSpaPlugin(
+      // Absolute path to compiled SPA
+      path.join(__dirname, '../dist'),
+      // List of routes to prerender
+      [ '/' ],
+      {
+        // Instead of loudly failing on JS errors (the default), ignore them.
+        ignoreJSErrors: true,
+        // raise or lower this limit if you wish.
+        maxAttempts: 10,
+        // embeds), which are not ideal for SEO and may introduce JS errors.
+        navigationLocked: true,
+        // http://phantomjs.org/api/command-line.html#command-line-options
+        phantomOptions: '--disk-cache=true',
+        // http://phantomjs.org/api/webpage/property/settings.html
+        phantomPageSettings: {
+          loadImages: true
+        },
+        postProcessHtml: function (context) {
+          var code = `
+            <script>
+              (function() {
+                if('serviceWorker' in navigator) {
+                  navigator.serviceWorker.register('/service-worker.js');
+                }
+              })();
+            </script>
+          `
+          return context.html.replace(
+            /<\/head>/i,
+            code + '<\/head>'
+          )
+        }
+      }
+    ), */
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'vue-docker',
+      filename: 'service-worker.js',
+      navigateFallback: 'http://localhost/index.html',
+      mergeStaticsConfig: true,
+      staticFileGlobsIgnorePatterns: [/\.map$/,/\.gz$/]
     }),
     // split vendor js into its own file
     // 公共模块插件，便于浏览器缓存，提高程序的运行速度（哪些需要打包进公共模块需要取舍）

@@ -9,12 +9,12 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'), // 输出目录
     assetsSubDirectory: 'static', // 子目录
     assetsPublicPath: '/', // 发布地址，例如HTML中引用js的是以/开头
-    productionSourceMap: true, // 是否开启sourcemap
+    productionSourceMap: false, // 是否开启sourcemap
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
-    productionGzip: false, // 是否开启Gzip，以及包含哪些类型文件
+    productionGzip: true, // 是否开启Gzip，以及包含哪些类型文件
     productionGzipExtensions: ['js', 'css'],
     // Run the build command with an extra argument to
     // View the bundle analyzer report after build finishes:
