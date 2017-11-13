@@ -30,7 +30,7 @@ module.exports = {
   },
   resolve: {
     // resolve是webpack的内置选项，顾名思义，决定要做的事情，如何处理 import 明明
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', 'ts', '.json'],
     alias: {
       // 后面的$符号指精确匹配，也就是说只能使用 import vuejs from "vue" 这样的方式导入vue.esm.js文件，不能在后面跟上 vue/vue.js
       'vue$': 'vue/dist/vue.esm.js',
@@ -59,6 +59,14 @@ module.exports = {
         loader: 'vue-loader',
         // 将vueLoaderConfig当做参数传递给vue-loader,就可以解析文件中的css相关文件
         options: vueLoaderConfig
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
       },
       {
         test: /\.js$/,

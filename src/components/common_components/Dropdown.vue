@@ -1,7 +1,7 @@
 <template>
   <div class="select-option">
     <select class="select-dropdown" v-model='selected'  @change="select()">
-      <option v-for="(option, index) in optionList" v-bind:value="option[value]">
+      <option v-for="(option, index) in optionList" v-bind:key="index" :value="option[value]">
         {{ option[show] }}
       </option>
     </select>
@@ -9,13 +9,18 @@
   </div>
 </template>
 
-<script>
+<script type="ts">
 export default {
   name: 'Dropdown',
   data () {
     return { selected: this.initSelect }
   },
-  props: ['optionList', 'initSelect', 'value', 'show'],
+  props:{
+    optionList: Array,
+    initSelect: [String, Number, Boolean],
+    value: String,
+    show: String
+  },
   methods: {
     select: function () {
       this.$emit('select', this.selected)
@@ -24,7 +29,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .select-dropdown {
   height: 0.5rem;
@@ -49,7 +53,7 @@ export default {
   border-left: 0.08rem solid transparent;
   border-right: 0.08rem solid transparent;
   width: 0;
-  height: 0;  
+  height: 0;
 }
 .select-downarrow-back{
   position: relative;
@@ -59,6 +63,6 @@ export default {
   border-left: 0.12rem solid transparent;
   border-right: 0.12rem solid transparent;
   width: 0;
-  height: 0;  
+  height: 0;
 }
 </style>

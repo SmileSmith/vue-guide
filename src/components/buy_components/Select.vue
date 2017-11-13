@@ -7,7 +7,7 @@
     </p>
     <div class="select-title" v-if="loading">
       Loading...
-    </div>    
+    </div>
     <div class="select-numberline" v-bind:class="{'select-inline': !selectConfig.title_inline, 'select-unit': selectConfig.number_title}">
       <span class="select-number"  v-for="numberObj in numberList">
         <span class="select-number-title" v-if="selectConfig.number_title && numberObj.title"> {{ numberObj.title }} </span>
@@ -16,7 +16,7 @@
       <span class="select-refresh" v-if="selectConfig.number_refresh" @click="getRandomBall($event)"></span>
     </div>
     <div class="select-submit">
-      <select-dropdown class="select-money" 
+      <select-dropdown class="select-money"
         :optionList="moneyList"  :initSelect="selectedMoney" value="number" show="show"
         v-on:select="changeMoney">
       </select-dropdown><button class="select-button">{{ selectConfig.submit_button }}</button>
@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script>
+<script type="ts">
 import MoneyList from '@/configs/dropdown.moneyList.js'
 import Dropdown from '@/components/common_components/Dropdown.vue'
 import { randomBall } from '@/configs/fn.core'
@@ -33,7 +33,7 @@ import { randomBall } from '@/configs/fn.core'
 
 export default {
   name: 'select',
-  data () {
+  data() {
     return {
       moneyList: MoneyList.moneyList,
       selectedMoney: 10,
@@ -169,7 +169,7 @@ export default {
 .select-money {
   display: inline-block;
   width: 1.3rem;
-  margin-right: 0.2rem;   
+  margin-right: 0.2rem;
 }
 
 .select-button{
