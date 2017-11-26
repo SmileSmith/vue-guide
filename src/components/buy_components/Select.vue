@@ -31,6 +31,28 @@ import { randomBall } from '@/configs/fn.core'
 // const moneyList = resolve => require(['@/configs/dropdown.moneyList.js'], resolve)
 // const Multiple7 = resolve => require(['@/configs/config.multiple7.js'], resolve)
 
+// 当methods中方法过多时可以将功能性相关的方法剥离，以解构的形式插入
+// this的指向也是在vue实例
+// 是不是另一种形式的mixin？？
+// methods方法过多更多是component拆分不够细，尝试分离组件在大多情况下是更好的选择
+
+const ballMethods = {
+  getRandomBall: function (event) {
+    if (!this.selectConfig.numberList) {
+      return
+    }
+    this.numberList = randomBall(this.selectConfig.numberList)
+    if (!event || !event.currentTarget) {
+      return this.numberList
+    }
+    var refreshElement = event.currentTarget
+    refreshElement.classList.remove('rotate')
+    window.setTimeout(function () {
+      refreshElement.classList.add('rotate')
+    }, 0)
+  }
+}
+
 export default {
   name: 'select',
   data() {
@@ -51,20 +73,7 @@ export default {
     changeMoney: function (money) {
       this.selectedMoney = money
     },
-    getRandomBall: function (event) {
-      if (!this.selectConfig.numberList) {
-        return
-      }
-      this.numberList = randomBall(this.selectConfig.numberList)
-      if (!event || !event.currentTarget) {
-        return this.numberList
-      }
-      var refreshElement = event.currentTarget
-      refreshElement.classList.remove('rotate')
-      window.setTimeout(function () {
-        refreshElement.classList.add('rotate')
-      }, 0)
-    }
+  ...ballMethods
   }
 }
 </script>
