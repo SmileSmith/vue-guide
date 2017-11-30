@@ -43,7 +43,9 @@ var webpackConfig = merge(baseWebpackConfig, {
     // 有区别，输出文件加上的chunkhash
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     // 非入扣文件配置，异步加载的模块，输出文件加上的chunkhash
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    // ...默认的是chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')，这里改成name，但是模块间的依赖关系依然是通过某种ID依赖
+    // ...name和id都可以达到效果
+    chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -72,8 +74,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
-        ? 'index.html'
-        : config.build.index,
+      ? 'index.html'
+      : config.build.index,
       template: 'index.html', // 模板是index.html加不加无所谓
       inject: true, // 将js文件注入到body标签的结尾
       minify: {  // 压缩html页面
@@ -87,7 +89,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency' // 可以对页面中引用的chunk进行排序，保证页面的引用顺序
     }),
     // TODO SPA预渲染插件，目前没有app-shell，效果不佳
-/*     new PrerenderSpaPlugin(
+    /*     new PrerenderSpaPlugin(
       // Absolute path to compiled SPA
       path.join(__dirname, '../dist'),
       // List of routes to prerender
@@ -108,13 +110,13 @@ var webpackConfig = merge(baseWebpackConfig, {
         postProcessHtml: function (context) {
           var code = `
             <script>
-              (function() {
+            (function() {
                 if('serviceWorker' in navigator) {
                   navigator.serviceWorker.register('/service-worker.js');
                 }
               })();
             </script>
-          `
+            `
           return context.html.replace(
             /<\/head>/i,
             code + '<\/head>'
@@ -129,6 +131,16 @@ var webpackConfig = merge(baseWebpackConfig, {
       mergeStaticsConfig: true,
       staticFileGlobsIgnorePatterns: [/\.map$/,/\.gz$/]
     }),
+    // 为每个模块添加模块名，避免因为用ID引起依赖关系错乱
+    new webpack.NamedChunksPlugin((chunk) => {
+      if (chunk.name) {
+        return chunk.name;
+      }
+      return chunk.mapModules(m => path.relative(m.context, m.request)).join("_");
+    }),
+    // reference：https://zhuanlan.zhihu.com/p/31456808
+    // 模块依赖根据模块的hash匹配，而不是默认的模块ID
+    new webpack.HashedModuleIdsPlugin(),
     // split vendor js into its own file
     // 公共模块插件，便于浏览器缓存，提高程序的运行速度（哪些需要打包进公共模块需要取舍）
     new webpack.optimize.CommonsChunkPlugin({
