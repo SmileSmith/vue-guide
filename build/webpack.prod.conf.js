@@ -136,7 +136,10 @@ var webpackConfig = merge(baseWebpackConfig, {
       if (chunk.name) {
         return chunk.name;
       }
-      return chunk.mapModules(m => path.relative(m.context, m.request)).join("_");
+      const chunkName = chunk.mapModules(m => {
+        return path.relative(m.context, m.request);
+      }).join("_");
+      return chunkName;
     }),
     // reference：https://zhuanlan.zhihu.com/p/31456808
     // 模块依赖根据模块的hash匹配，而不是默认的模块ID

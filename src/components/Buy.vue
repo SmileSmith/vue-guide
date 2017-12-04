@@ -16,11 +16,13 @@ import Jackpot from '@/components/buy_components/Jackpot.vue'
 // const Election5 = resolve => require(['@/configs/config.11election5.js'], resolve)
 // const Direct3 = resolve => require(['@/configs/config.direct3.js'], resolve)
 // const Direct5 = resolve => require(['@/configs/config.direct5.js'], resolve)
-import Multiple7 from '@/configs/config.multiple7.js'
+/* import Multiple7 from '@/configs/config.multiple7.js'
 import Multiple11 from '@/configs/config.multiple11.js'
 import Election5 from '@/configs/config.11election5.js'
 import Direct3 from '@/configs/config.direct3.js'
-import Direct5 from '@/configs/config.direct5.js'
+import Direct5 from '@/configs/config.direct5.js' */
+// import typeConfig from '@/configs/config.type.default.js'
+import { multiple7, multiple11, election5, direct3, direct5 } from '@/configs/config.type.object'
 
 export default {
   name: 'buy',
@@ -54,22 +56,22 @@ export default {
       var config
       switch (this.$route.params.type) {
         case 'multiple7':
-          config = Multiple7
+          config = multiple7
           break
         case 'multiple11':
-          config = Multiple11
+          config = multiple11
           break
         case 'election5':
-          config = Election5
+          config = election5
           break
         case 'direct3':
-          config = Direct3
+          config = direct3
           break
         case 'direct5':
-          config = Direct5
+          config = direct5
           break
         default:
-          config = Multiple7
+          config = multiple7
       }
       return config
     },
