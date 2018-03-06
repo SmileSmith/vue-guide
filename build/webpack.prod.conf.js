@@ -28,6 +28,8 @@ var env = process.env.NODE_ENV === 'testing'
 
 // 把当前的配置对象和base.conf基础的配置对象合并
 var webpackConfig = merge(baseWebpackConfig, {
+  // 启用webpack内置的生产环境优化
+  mode: 'production',
   module: {
     // 下面就是把utils配置好的处理各种css类型的配置拿过来，和dev设置一样，就是这里多了个extract: true，此项是自定义项，设置为true表示，生成独立的文件
     rules: utils.styleLoaders({
@@ -47,16 +49,25 @@ var webpackConfig = merge(baseWebpackConfig, {
     // ...name和id都可以达到效果
     chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
   },
+  optimization: {
+    runtimeChunk: {
+        name: "manifest"
+    },
+    splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: "vendor",
+                chunks: "all"
+            }
+        }
+    },
+    minimize: true,
+  },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env// line-21 下面是利用DefinePlugin插件，定义process.env环境变量为env
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false // 禁止压缩时候的警告信息
-      },
-      sourceMap: true // 压缩后生成map文件
     }),
     // extract css into its own file，已经很清楚了就是独立css文件，文件名和hash
     new ExtractTextPlugin({
@@ -127,10 +138,14 @@ var webpackConfig = merge(baseWebpackConfig, {
     new SWPrecacheWebpackPlugin({
       cacheId: 'vue-docker',
       filename: 'service-worker.js',
-      navigateFallback: 'http://localhost/index.html',
       mergeStaticsConfig: true,
       staticFileGlobsIgnorePatterns: [/\.map$/,/\.gz$/]
     }),
+
+/*
+    // webpack-v4中用自带的optimization.splitChunks, optimization.runtimeChunk替代，
+    // 这里把optimization放入base.config中
+
     // 为每个模块添加模块名，避免因为用ID引起依赖关系错乱
     new webpack.NamedChunksPlugin((chunk) => {
       if (chunk.name) {
@@ -166,7 +181,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    }),
+    }), */
+
     // copy custom static assets
     // 复制项目中的静态文件，忽略.开头的文件
     new CopyWebpackPlugin([

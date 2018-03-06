@@ -6,6 +6,10 @@ var merge = require('webpack-merge')
 var baseConfig = require('./webpack.base.conf')
 
 var webpackConfig = merge(baseConfig, {
+  // 启用webpack内置的生产环境优化
+  mode: 'production',
+  // 不适用性能检测
+  performance: false,
   // use inline sourcemap for karma-sourcemap-loader
   module: {
     rules: utils.styleLoaders()
@@ -13,7 +17,7 @@ var webpackConfig = merge(baseConfig, {
   devtool: '#inline-source-map',
   resolveLoader: {
     alias: {
-      // necessary to to make lang="scss" work in test when using vue-loader's ?inject option 
+      // necessary to to make lang="scss" work in test when using vue-loader's ?inject option
       // see discussion at https://github.com/vuejs/vue-loader/issues/724
       'scss-loader': 'sass-loader'
     }

@@ -21,6 +21,8 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 // 把当前的配置对象和base.conf基础的配置对象合并
 module.exports = merge(baseWebpackConfig, {
+  // 启用webpack内置的开发环境优化
+  mode: 'development',
   module: {
     // 下面是把utils配置中的处理css类似文件的处理方法拿过来，并且不生成cssMap文件
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
@@ -30,6 +32,20 @@ module.exports = merge(baseWebpackConfig, {
   // 生产环境：#source-map
   // 开发环境：#cheap-module-eval-source-map  编译消耗小
   devtool: '#cheap-module-eval-source-map',
+  optimization: {
+    runtimeChunk: {
+        name: "manifest"
+    },
+    splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: "vendor",
+                chunks: "all"
+            }
+        }
+    }
+  },
   plugins: [
     // DefinePlugin内置webpack插件，专门用来定义全局变量的，下面定义一个全局变量 process.env 并且值是如下
     new webpack.DefinePlugin({
@@ -39,9 +55,13 @@ module.exports = merge(baseWebpackConfig, {
     // 当你的程序在运行时，而你现在要替换、添加或删除某个模块，又不想重新加载页面，
     // 这个插件帮助你实现无刷新加载，关于内部实现原理
     new webpack.HotModuleReplacementPlugin(),
+
     // 当webpack编译错误的时候，来中断打包进程，防止错误代码打包到文件中，你还不知道
-    new webpack.NoEmitOnErrorsPlugin(),
+    // webpack-v4中在生产环境中默认开启，我们在开发环境中也开启
+    // new webpack.NoEmitOnErrorsPlugin(),
+
     // https://github.com/ampedandwired/html-webpack-plugin
+    // html-webpack-plugin官方仓库没有更新支持webpackv4，这里用的webpack社区的fork版本，TODO: 后续升级至官方版本
     new HtmlWebpackPlugin({ // 和生产环境的配置略有区别，不需要minify
       filename: 'index.html',
       template: 'index.html',
